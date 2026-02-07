@@ -11,21 +11,21 @@ export const DEFAULT_USER_GUIDE: Record<
   fr: {
     title: "Guide rapide",
     description:
-      "Je réponds uniquement aux questions liées à vloth.tech, ses services et ses projets.",
+      "Je reponds aux questions sur ce portfolio template: profil, services, projets, process, tarifs et documents.",
     suggestions: [
       "Quels services proposes-tu ?",
-      "Peux-tu m'aider à lancer un site vitrine ?",
-      "Quel est ton process de collaboration ?"
+      "Peux-tu me montrer un exemple de projet ?",
+      "Comment puis-je te contacter ?"
     ]
   },
   en: {
     title: "Quick guide",
     description:
-      "I only answer questions related to vloth.tech, its services, and its projects.",
+      "I answer questions about this portfolio template: profile, services, projects, process, pricing, and documents.",
     suggestions: [
       "What services do you offer?",
-      "Can you help me launch a marketing site?",
-      "What is your collaboration process?"
+      "Can you show a project example?",
+      "How can I contact you?"
     ]
   }
 };

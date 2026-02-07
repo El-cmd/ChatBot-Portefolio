@@ -7,8 +7,8 @@ import { LanguageProvider } from "@/components/language-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "vloth.tech | Assistant",
-  description: "Assistant officiel de vloth.tech."
+  title: "Portfolio Chatbot Template",
+  description: "Open-source portfolio assistant template with RAG."
 };
 
 export default function RootLayout({

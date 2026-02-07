@@ -2,21 +2,21 @@
 
 ## Contact principal
 Email :
-Numéro de téléphone:
+Numero de telephone :
 
 ```ui
 buttons:
-  - label: lothvalentin@gmail.com
-    url: mailto:lothvalentin@gmail.com
+  - label: hello@example.com
+    url: mailto:hello@example.com
     style: primary
     icon: mail
-  - label: 06.95.57.68.02
-    url: tel:+33695576802
+  - label: +33 6 00 00 00 00
+    url: tel:+33600000000
     style: primary
     icon: phone
 ```
 
-## Réseaux
+## Reseaux
 LinkedIn :
 GitHub :
 Site :
@@ -24,19 +24,27 @@ Site :
 ```ui
 buttons:
   - label: LinkedIn
-    url: https://www.linkedin.com/in/loth-valentin-50378a231/
+    url: https://www.linkedin.com/in/your-profile/
     style: primary
     icon: linkedin
   - label: GitHub
-    url: https://github.com/El-cmd
+    url: https://github.com/your-handle
     style: primary
     icon: github
   - label: Site
-    url: https://vloth.tech
+    url: https://your-website.com
     style: primary
     icon: globe
 ```
 
-## Disponibilité
-- Réponse sous : 1h
-- Fuseau horaire : PARIS UTC
+## Documents
+
+```ui
+file:
+  label: CV (PDF)
+  url: https://example.com/cv.pdf
+```
+
+## Disponibilite
+- Reponse sous : 24h
+- Fuseau horaire : UTC+1

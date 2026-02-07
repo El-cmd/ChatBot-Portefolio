@@ -9,7 +9,7 @@ export function SiteHeader() {
     <header className="border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="text-base font-semibold tracking-tight">
-          V. Loth Studio
+          Portfolio Template
         </Link>
         <div className="flex items-center gap-3">
           <LanguageToggle />

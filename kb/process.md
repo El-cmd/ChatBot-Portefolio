@@ -1,41 +1,33 @@
 # Process de travail
 
 ## 1. Prise de contact
-- Échange initial (message ou appel court)
+- Echange initial (message ou appel court)
 - Discussion du besoin, des objectifs et des contraintes
-- Clarification du périmètre (fonctionnalités, délais, budget)
-
-👉 Cette étape permet de vérifier que le projet est pertinent et réalisable.
+- Clarification du perimetre (fonctionnalites, delais, budget)
 
 ---
 
 ## 2. Devis
-- Proposition claire et détaillée
-- Présentation du périmètre, du délai et du tarif
+- Proposition claire et detaillee
+- Presentation du perimetre, du delai et du tarif
 - Ajustements possibles avant validation
-
-👉 Aucun engagement tant que le devis n’est pas validé.
 
 ---
 
-## 3. Réalisation
-- Développement de la solution
-- Avancées progressives et échanges si nécessaire
+## 3. Realisation
+- Developpement de la solution
+- Avancees progressives et echanges
 - Tests techniques et fonctionnels
-
-👉 L’objectif est de livrer une solution simple, stable et conforme au besoin.
 
 ---
 
 ## 4. Livraison
 - Mise en ligne ou remise du livrable
-- Vérification finale avec le client
-- Ajustements mineurs inclus après livraison
+- Verification finale
+- Ajustements mineurs inclus
 
 ---
 
 ## 5. Suivi
-- Possibilité de maintenance ou d’évolution
+- Possibilite de maintenance ou d'evolution
 - Support ponctuel selon les besoins
-- Accompagnement sur la prise en main si nécessaire
-

@@ -1,4 +1,4 @@
-# Compétences techniques
+# Competences techniques
 
 ## Frontend
 
@@ -9,64 +9,55 @@
 - Next.js
 - Tailwind CSS
 
-### Cas d’usage
+### Cas d'usage
 - Sites vitrines et landing pages
 - Interfaces web modernes et responsives
-- Intégration de formulaires et composants interactifs
-- Interfaces pour outils internes ou chatbots
+- Integrations de formulaires et composants interactifs
 
 ---
 
 ## Backend
 
 ### Technologies
-- **C**
-- **C++**
 - Python
 - FastAPI
 - Django
 - APIs REST
 - Authentification (JWT, OAuth)
 
-### Cas d’usage
-- Développement d’APIs backend
+### Cas d'usage
+- Developpement d'APIs backend
 - Outils web sur mesure
-- Logique métier et automatisations
-- Développement bas niveau ou performance (C / C++)
-- Aide à la compréhension et au debug de projets existants
+- Logique metier et automatisations
 
 ---
 
 ## IA / Chatbots
 
-### Compétences
+### Competences
 - Chatbots IA sur mesure
 - RAG (Retrieval-Augmented Generation)
 - Vectorisation de documents
-- Recherche sémantique
-- Réponses contrôlées (anti-hallucination)
+- Recherche semantique
+- Reponses controlees
 
-### Cas d’usage
-- Chatbots basés sur une base de connaissance
+### Cas d'usage
+- Chatbots bases sur une base de connaissance
 - FAQ intelligentes
-- Présentation automatisée de services ou de contenus
-- Aide à la navigation et à la recherche d’information
+- Aide a la navigation et a la recherche d'information
 
 ---
 
-## Infrastructure & systèmes
+## Infrastructure & systemes
 
 ### Technologies
-- **Linux**
+- Linux
 - Docker
 - Docker Compose
-- VPS (Linux)
-- Nginx (reverse proxy)
-- Déploiement et mise en production
+- VPS
+- Nginx
 
-### Cas d’usage
-- Administration et utilisation de systèmes Linux
-- Déploiement de sites et d’APIs
-- Containerisation de projets existants
-- Configuration de serveurs et de reverse proxy
-- Maintenance et résolution de problèmes de production
+### Cas d'usage
+- Deploiement de sites et APIs
+- Containerisation de projets
+- Maintenance et resolution de problemes de production

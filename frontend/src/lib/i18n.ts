@@ -9,187 +9,186 @@ export const messages = {
       why: "Pourquoi moi",
       chat: "Chatbot",
       contact: "Contact",
-      cta: "Réserver un appel"
+      cta: "Reserver un appel"
     },
     hero: {
-      badge: "Développeur freelance",
-      title: "Des produits propres, rapides et fiables pour les équipes modernes.",
+      badge: "Template open source",
+      title: "Un chatbot portfolio RAG pret a personnaliser.",
       description:
-        "Je conçois et livre des sites web, des chatbots IA avec base de connaissances, et un support dev/infra pragmatique qui fait avancer votre produit.",
-      primaryCta: "Démarrer un projet",
+        "Ce template vous aide a presenter votre profil, vos services, vos projets et vos documents avec une base de connaissance Markdown.",
+      primaryCta: "Demarrer",
       secondaryCta: "Voir les services"
     },
     services: {
       label: "Services",
-      title: "Des services ciblés avec une exécution premium.",
+      title: "Exemples de services a personnaliser.",
       cards: {
         website: {
-          title: "Création de sites web",
+          title: "Creation de sites web",
           description:
-            "Sites marketing, pages produit et landing pages optimisés pour la conversion, la performance et la maintenabilité."
+            "Sites vitrines, landing pages et experiences web performantes avec une architecture maintenable."
         },
         chatbot: {
           title: "Chatbots IA avec base de connaissances",
           description:
-            "Assistants avec recherche augmentée qui répondent à partir de vos docs, tickets support ou savoir interne."
+            "Assistants RAG relies a vos documents pour fournir des reponses traceables avec sources."
         },
         infra: {
           title: "Aide dev / infra",
           description:
-            "CI/CD, déploiements, monitoring et support d'ingénierie pour des livraisons fluides et prévisibles."
+            "CI/CD, deploiement Docker et support technique pour fiabiliser vos livraisons."
         }
       }
     },
     why: {
-      label: "Pourquoi moi",
-      title: "Une exécution senior sans les frais d'agence.",
+      label: "Pourquoi ce template",
+      title: "Base solide pour un portfolio assistant.",
       description:
-        "Un accès direct à un profil expérimenté qui transforme vos objectifs en livrables concrets, avec clarté et rapidité.",
+        "Structure front/back claire, contenu Markdown editable et pipeline RAG deja integre.",
       bullets: {
         product: {
-          title: "Approche orientée produit",
-          description:
-            "Priorité aux résultats, pas seulement aux livrables ou aux listes de fonctionnalités."
+          title: "Oriente resultat",
+          description: "Mise en production rapide avec des composants reutilisables."
         },
         communication: {
-          title: "Communication claire",
-          description: "Mises à jour régulières, décisions transparentes et zéro surprise."
+          title: "Lisible",
+          description: "Separation propre entre UI, API, prompt et base de connaissance."
         },
         performance: {
-          title: "Performance d'abord",
-          description: "Des builds rapides, accessibles et scalables dès le premier jour."
+          title: "Pragmatique",
+          description: "Conception simple a maintenir pour un usage personnel ou equipe."
         }
       }
     },
     cta: {
-      label: "Prêt à lancer ?",
-      title: "Cadrons votre prochaine version.",
+      label: "Pret a personnaliser ?",
+      title: "Adaptez ce template a votre profil.",
       description:
-        "Partagez un brief et je répondrai avec un timing, des recommandations et un plan clair pour le lancement.",
-      primary: "Me contacter",
-      secondary: "Email direct"
+        "Remplacez la KB exemple, configurez vos variables et publiez votre assistant portfolio.",
+      primary: "Configurer",
+      secondary: "Voir la documentation"
     },
     contact: {
       label: "Contact",
-      title: "Parlez-moi de votre projet.",
+      title: "Partagez votre besoin.",
       description:
-        "Partagez le contexte, vos objectifs et le timing. Je reviendrai avec une proposition sur mesure et les prochaines étapes.",
-      cardTitle: "Demande de projet",
+        "Cette section est un exemple. Remplacez les informations par vos canaux de contact.",
+      cardTitle: "Demande",
       fields: {
         name: "Nom",
         email: "Email",
         message: "Message",
         namePlaceholder: "Votre nom",
         emailPlaceholder: "vous@entreprise.com",
-        messagePlaceholder: "Que construisez-vous ?",
-        submit: "Envoyer le message"
+        messagePlaceholder: "Votre besoin",
+        submit: "Envoyer"
       }
     },
     chat: {
       label: "Chatbot",
-      title: "Discutez avec l'assistant vloth.tech.",
+      title: "Assistant Portfolio Template",
       description:
-        "Posez vos questions sur les services, projets ou collaborations liés à vloth.tech.",
+        "Posez vos questions sur le profil, les services, les projets et les ressources du template.",
       panelTitle: "Conversation",
       placeholder: "Tapez votre message...",
-      hint: "Entrée pour envoyer, Maj+Entrée pour un retour à la ligne.",
+      hint: "Entree pour envoyer, Maj+Entree pour une nouvelle ligne.",
       send: "Envoyer",
       sending: "Envoi...",
-      empty: "Démarrez la conversation.",
-      error: "Impossible de joindre le serveur. Réessayez plus tard.",
+      empty: "Demarrez la conversation.",
+      error: "Impossible de joindre le serveur. Reessayez plus tard.",
       initialAssistant:
-        "Je suis l'assistant de vloth.tech. Je réponds uniquement aux questions me concernant."
+        "Je suis l'assistant portfolio template. Je reponds uniquement a partir de la base de connaissance configuree."
     },
     footer: {
-      availability: "Disponible pour des missions freelance."
+      availability: "Template open source pret a contribuer."
     }
   },
   en: {
     nav: {
       services: "Services",
-      why: "Why me",
+      why: "Why this template",
       chat: "Chatbot",
       contact: "Contact",
       cta: "Book a call"
     },
     hero: {
-      badge: "Freelance developer",
-      title: "Clean, fast, and reliable product builds for modern teams.",
+      badge: "Open-source template",
+      title: "A RAG portfolio chatbot ready to customize.",
       description:
-        "I design and ship websites, AI chatbots with knowledge bases, and practical dev/infra support that keeps your product moving.",
-      primaryCta: "Start a project",
+        "This template helps you present your profile, services, projects, and documents through a Markdown knowledge base.",
+      primaryCta: "Get started",
       secondaryCta: "View services"
     },
     services: {
       label: "Services",
-      title: "Focused services with premium execution.",
+      title: "Service examples to customize.",
       cards: {
         website: {
           title: "Website creation",
           description:
-            "Marketing sites, product pages, and landing pages built for conversion, performance, and long-term maintainability."
+            "Marketing sites, landing pages, and performant web experiences with maintainable architecture."
         },
         chatbot: {
           title: "AI chatbots with knowledge base",
           description:
-            "Retrieval-augmented assistants that answer questions from your docs, support tickets, or internal knowledge."
+            "RAG assistants connected to your documents with source-backed answers."
         },
         infra: {
-          title: "Dev / infra help",
+          title: "Dev / infra support",
           description:
-            "CI/CD, deployments, monitoring, and engineering support that keeps delivery smooth and predictable."
+            "CI/CD, Docker deployment, and technical support to stabilize delivery."
         }
       }
     },
     why: {
-      label: "Why me",
-      title: "Senior-level execution without agency overhead.",
+      label: "Why this template",
+      title: "Solid baseline for a portfolio assistant.",
       description:
-        "You get a direct line to an experienced builder who can translate goals into shipped product work, with clarity and speed.",
+        "Clear front/back structure, editable Markdown content, and an integrated RAG pipeline.",
       bullets: {
         product: {
-          title: "Product-minded approach",
-          description: "Prioritize outcomes, not just deliverables or feature lists."
+          title: "Outcome-focused",
+          description: "Ship quickly with reusable components."
         },
         communication: {
-          title: "Clear communication",
-          description: "Weekly updates, transparent decisions, and no surprises."
+          title: "Readable",
+          description: "Clean split between UI, API, prompt, and knowledge base."
         },
         performance: {
-          title: "Performance first",
-          description: "Fast, accessible, and scalable builds from day one."
+          title: "Pragmatic",
+          description: "Simple to maintain for individual or team usage."
         }
       }
     },
     cta: {
-      label: "Ready to build?",
-      title: "Let's scope your next release.",
+      label: "Ready to customize?",
+      title: "Adapt this template to your profile.",
       description:
-        "Share a brief on your project and I'll respond with timing, recommendations, and a clear path to launch.",
-      primary: "Contact me",
-      secondary: "Email directly"
+        "Replace the sample KB, configure environment variables, and publish your portfolio assistant.",
+      primary: "Configure",
+      secondary: "Read docs"
     },
     contact: {
       label: "Contact",
-      title: "Tell me about your project.",
+      title: "Share your request.",
       description:
-        "Share a little context, goals, and timing. I'll follow up with a tailored proposal and next steps.",
-      cardTitle: "Project inquiry",
+        "This section is an example. Replace it with your own contact channels.",
+      cardTitle: "Inquiry",
       fields: {
         name: "Name",
         email: "Email",
         message: "Message",
         namePlaceholder: "Your name",
         emailPlaceholder: "you@company.com",
-        messagePlaceholder: "What are you building?",
-        submit: "Send message"
+        messagePlaceholder: "Your request",
+        submit: "Send"
       }
     },
     chat: {
       label: "Chatbot",
-      title: "Chat with the vloth.tech assistant.",
+      title: "Portfolio Assistant Template",
       description:
-        "Ask questions about vloth.tech services, projects, or collaboration.",
+        "Ask about profile, services, projects, and resources from the template knowledge base.",
       panelTitle: "Conversation",
       placeholder: "Type your message...",
       hint: "Press Enter to send, Shift+Enter for a new line.",
@@ -198,10 +197,10 @@ export const messages = {
       empty: "Start the conversation.",
       error: "Unable to reach the server. Please try again later.",
       initialAssistant:
-        "I am the assistant for vloth.tech. I only answer questions about me."
+        "I am the portfolio template assistant. I only answer from the configured knowledge base."
     },
     footer: {
-      availability: "Available for freelance projects."
+      availability: "Open-source template ready for contributions."
     }
   }
 } as const;

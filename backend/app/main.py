@@ -11,7 +11,7 @@ from app.services.groq_client import generate_answer
 from app.services.prompt_loader import load_system_prompt
 from app.services.rag_service import build_rag_prompt, load_rag_resources, retrieve_context
 
-app = FastAPI(title="vloth.tech chatbot backend", version="0.1.0")
+app = FastAPI(title="portfolio chatbot backend", version="0.1.0")
 logger = logging.getLogger("uvicorn.error")
 
 
