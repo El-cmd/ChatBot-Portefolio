@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:8001
+      - NEXT_TELEMETRY_DISABLED=1
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+  backend:
+    build: ./backend
+    ports:
+      - "8001:8001"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROQ_MODEL=${GROQ_MODEL:-llama-3.1-8b-instant}
+      - GROQ_TEMPERATURE=${GROQ_TEMPERATURE:-0.2}
+      - KB_DIR=/app/kb
+      - KB_TOP_K=${KB_TOP_K:-4}
+      - KB_MIN_SCORE=${KB_MIN_SCORE:-0.0}
+    volumes:
+      - ./kb:/app/kb:ro

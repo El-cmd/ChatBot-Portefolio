@@ -1,2 +1,3 @@
 # ChatBot-Portefolio
-Chatbot portfolio personnel avec RAG (FAISS + LLM ), conçu pour présenter mon profil et, à terme, fournir CV et documents contextuels.
+
+Migration in progress: this repository is being transformed into an open-source template.
