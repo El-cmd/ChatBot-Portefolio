@@ -18,4 +18,17 @@ export type ChatRequest = {
 
 export type ChatResponse = {
   answer: string;
+  sources: {
+    id: string;
+    source: string;
+    chunk_index: number;
+    score: number;
+    text: string;
+  }[];
+  attachments: {
+    type: "image";
+    url: string;
+    alt?: string | null;
+    source_id?: string | null;
+  }[];
 };

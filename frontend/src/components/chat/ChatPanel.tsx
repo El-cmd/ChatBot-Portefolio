@@ -17,6 +17,24 @@ const fadeIn = {
   transition: { duration: 0.4, ease: "easeOut" }
 };
 
+const UI_BLOCK_REGEX = /```ui\s*\r?\n[\s\S]*?\r?\n```/g;
+const HAS_UI_BLOCK_REGEX = /```ui\s*\r?\n[\s\S]*?\r?\n```/;
+
+const extractUiBlocksFromSources = (sources: ChatResponse["sources"]): string[] => {
+  const unique = new Set<string>();
+
+  for (const source of sources) {
+    for (const match of source.text.matchAll(UI_BLOCK_REGEX)) {
+      const block = match[0].trim();
+      if (block) {
+        unique.add(block);
+      }
+    }
+  }
+
+  return [...unique];
+};
+
 export function ChatPanel() {
   const { messages, locale } = useLanguage();
   const guide = DEFAULT_USER_GUIDE[locale];
@@ -104,12 +122,17 @@ export function ChatPanel() {
       }
 
       const data = (await response.json()) as ChatResponse;
+      const uiBlocks = extractUiBlocksFromSources(data.sources ?? []);
+      const answerWithUiBlocks =
+        uiBlocks.length > 0 && !HAS_UI_BLOCK_REGEX.test(data.answer)
+          ? `${data.answer}\n\n${uiBlocks.join("\n\n")}`
+          : data.answer;
       setChatMessages((current) => [
         ...current,
         {
           id: createId(),
           role: "assistant",
-          content: data.answer
+          content: answerWithUiBlocks
         }
       ]);
     } catch (error) {

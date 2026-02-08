@@ -15,6 +15,7 @@ from app.core.config import get_settings
 
 RAG_INSTRUCTIONS = (
     "Tu dois repondre uniquement avec les informations contenues dans EXCERPTS. "
+    "Si EXCERPTS contient un bloc ```ui, recopie ce bloc exactement dans ta reponse sans le modifier. "
     "Si les extraits ne contiennent pas la reponse, dis-le clairement et propose /contact. "
     "N'invente rien."
 )

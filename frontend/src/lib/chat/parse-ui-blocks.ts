@@ -27,7 +27,7 @@ export type UiBlock =
 
 export type UiPart = { type: "markdown"; content: string } | { type: "ui"; block: UiBlock };
 
-const UI_BLOCK_REGEX = /```ui\s*\n([\s\S]*?)\n```/g;
+const UI_BLOCK_REGEX = /```ui\s*\r?\n([\s\S]*?)\r?\n```/g;
 const ALLOWED_URL = /^(https?:|mailto:|tel:|\/)/i;
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
