@@ -10,6 +10,23 @@
   -webkit-line-clamp: 2;
 }
 
+.project-card-ambient {
+  opacity: 0.5;
+  filter: blur(42px) saturate(1.55);
+  transform: scale(1.22);
+  transition:
+    opacity 500ms ease,
+    filter 500ms ease,
+    transform 700ms ease;
+}
+
+.premium-project-card:hover .project-card-ambient,
+.premium-project-card:focus-within .project-card-ambient {
+  opacity: 0.68;
+  filter: blur(34px) saturate(1.75);
+  transform: scale(1.28);
+}
+
 @media (max-width: 767px) {
   .portfolio-scroll,
   .hero-section,
@@ -53,6 +70,11 @@
   .premium-project-card {
     height: 22rem;
     border-radius: 1.4rem;
+  }
+
+  .project-card-ambient {
+    opacity: 0.58;
+    filter: blur(34px) saturate(1.6);
   }
 
   .hero-content {

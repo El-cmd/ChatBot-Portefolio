@@ -32,6 +32,11 @@ type ProjectsApiResponse = {
   error?: string
 }
 
+type ProjectVideoRefs = {
+  ambient: HTMLVideoElement | null
+  main: HTMLVideoElement | null
+}
+
 type ActiveProjectDescription = {
   title: string
   description: string
@@ -426,7 +431,7 @@ export default function Home() {
   const pageScrollRef = useRef<HTMLDivElement>(null)
   const heroRailRef = useRef<HTMLDivElement>(null)
   const chatMessagesRef = useRef<HTMLDivElement>(null)
-  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({})
+  const videoRefs = useRef<Record<number, ProjectVideoRefs>>({})
   const isLightMode = theme === "light"
   const gridColor = isLightMode ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)"
   const mainThemeClass = isLightMode ? "bg-white text-black" : "bg-black text-white"
@@ -463,8 +468,8 @@ export default function Home() {
     ? "border-black bg-white text-black hover:bg-black hover:text-white"
     : "border-white/15 bg-white text-black hover:bg-neutral-200"
   const premiumProjectCardClass = isLightMode
-    ? "border-black/10 bg-white/80 shadow-[0_24px_70px_rgba(0,0,0,0.12)]"
-    : "border-white/15 bg-neutral-950/80 shadow-[0_24px_70px_rgba(0,0,0,0.45)]"
+    ? "border-black/10 bg-white/65 shadow-[0_24px_70px_rgba(0,0,0,0.12)]"
+    : "border-white/15 bg-neutral-950/60 shadow-[0_24px_70px_rgba(0,0,0,0.45)]"
   const premiumProjectLinkClass = isLightMode
     ? "border-black/10 bg-black/[0.025] text-neutral-800 shadow-[0_6px_18px_rgba(0,0,0,0.04)] hover:border-black/20 hover:bg-black hover:text-white"
     : "border-white/10 bg-white/[0.035] text-gray-100 shadow-[0_6px_18px_rgba(0,0,0,0.18)] hover:border-white/20 hover:bg-white/10 hover:text-white"
@@ -480,22 +485,32 @@ export default function Home() {
     : "self-end border-white bg-white text-black"
 
   const playProjectVideo = async (id: number) => {
-    const video = videoRefs.current[id]
-    if (!video) return
+    const videos = videoRefs.current[id]
+    if (!videos) return
 
-    try {
-      await video.play()
-    } catch {
-      // Some browsers can reject autoplay even when muted; keep the UI silent.
-    }
+    await Promise.all(
+      Object.values(videos).map(async (video) => {
+        if (!video) return
+
+        try {
+          await video.play()
+        } catch {
+          // Some browsers can reject autoplay even when muted; keep the UI silent.
+        }
+      }),
+    )
   }
 
   const pauseProjectVideo = (id: number) => {
-    const video = videoRefs.current[id]
-    if (!video) return
+    const videos = videoRefs.current[id]
+    if (!videos) return
 
-    video.pause()
-    video.currentTime = 0
+    Object.values(videos).forEach((video) => {
+      if (!video) return
+
+      video.pause()
+      video.currentTime = 0
+    })
   }
 
   const handleChatSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -792,7 +807,36 @@ export default function Home() {
                             }}
                             className={`premium-project-card group relative flex h-[25rem] self-start flex-col overflow-hidden rounded-[1.75rem] border text-left backdrop-blur-xl transition duration-500 hover:-translate-y-1 ${premiumProjectCardClass}`}
                           >
-                            <div className={`relative h-[58%] shrink-0 overflow-hidden ${projectMediaClass}`}>
+                            {mediaUrl ? (
+                              <div className="project-card-ambient pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+                                {isVideo ? (
+                                  <video
+                                    ref={(node) => {
+                                      const refs = videoRefs.current[project.id] ?? { ambient: null, main: null }
+                                      refs.ambient = node
+                                      videoRefs.current[project.id] = refs
+                                    }}
+                                    src={mediaUrl}
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    tabIndex={-1}
+                                    className="h-full w-full object-cover"
+                                  />
+                                ) : (
+                                  <img src={mediaUrl} alt="" className="h-full w-full object-cover" />
+                                )}
+                              </div>
+                            ) : null}
+                            <div
+                              className={`pointer-events-none absolute inset-0 z-[1] ${
+                                isLightMode
+                                  ? "bg-gradient-to-b from-white/15 via-white/45 to-white/90"
+                                  : "bg-gradient-to-b from-black/10 via-black/45 to-black/90"
+                              }`}
+                            />
+
+                            <div className={`relative z-10 h-[58%] shrink-0 overflow-hidden ${projectMediaClass}`}>
                               <span
                                 className={`absolute left-5 top-5 z-20 rounded-full border px-3 py-1.5 text-[10px] font-medium tracking-[0.12em] backdrop-blur-xl ${chipClass}`}
                               >
@@ -806,7 +850,9 @@ export default function Home() {
                                   isVideo ? (
                                     <video
                                       ref={(node) => {
-                                        videoRefs.current[project.id] = node
+                                        const refs = videoRefs.current[project.id] ?? { ambient: null, main: null }
+                                        refs.main = node
+                                        videoRefs.current[project.id] = refs
                                       }}
                                       src={mediaUrl}
                                       muted
@@ -835,7 +881,7 @@ export default function Home() {
                               />
                             </div>
 
-                            <div className="flex min-h-0 flex-1 flex-col px-5 pb-5 pt-4">
+                            <div className="relative z-10 flex min-h-0 flex-1 flex-col px-5 pb-5 pt-4">
                               <div className="min-w-0">
                                 <h3
                                   className={`truncate text-xl font-medium tracking-[-0.025em] ${
