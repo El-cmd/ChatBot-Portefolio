@@ -34,6 +34,11 @@
     padding-inline: 1rem;
   }
 
+  .hub-title {
+    font-size: clamp(2rem, 9vw, 2.5rem);
+    line-height: 1.1;
+  }
+
   .hero-content {
     width: 100%;
     padding-inline: 0.5rem;

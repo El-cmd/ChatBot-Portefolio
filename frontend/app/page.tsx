@@ -731,7 +731,7 @@ export default function Home() {
                   hoverScale={1.28}
                 />
                 <div className="relative z-10 flex h-full w-full max-w-6xl flex-col px-6 pb-8 pt-24 text-center md:pt-20">
-                  <h2 className={`text-5xl font-medium tracking-tight md:text-7xl ${primaryTextClass}`}>
+                  <h2 className={`hub-title text-5xl font-medium tracking-tight md:text-7xl ${primaryTextClass}`}>
                     HUB
                   </h2>
                   <p className={`mx-auto mt-5 max-w-xl text-sm uppercase tracking-[0.35em] ${labelTextClass}`}>
