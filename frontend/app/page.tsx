@@ -2,7 +2,7 @@
 
 import { type FormEvent, useEffect, useRef, useState } from "react"
 import dynamic from "next/dynamic"
-import { FileText, Github, Globe, Linkedin, Mail, Moon, Phone, SendHorizonal, Sun } from "lucide-react"
+import { ExternalLink, FileText, Github, Globe, Linkedin, Mail, Moon, Phone, SendHorizonal, Sun } from "lucide-react"
 import FlickeringGrid from "@/components/flickering-grid"
 import { getStrapiAssetUrl, type StrapiProject } from "@/lib/strapi"
 
@@ -465,12 +465,9 @@ export default function Home() {
   const premiumProjectCardClass = isLightMode
     ? "border-black/10 bg-white/80 shadow-[0_24px_70px_rgba(0,0,0,0.12)]"
     : "border-white/15 bg-neutral-950/80 shadow-[0_24px_70px_rgba(0,0,0,0.45)]"
-  const premiumProjectActionClass = isLightMode
-    ? "border-black/10 bg-black/[0.04] text-black hover:bg-black hover:text-white"
-    : "border-white/10 bg-white/10 text-white hover:bg-white hover:text-black"
   const premiumProjectLinkClass = isLightMode
-    ? "border-black/10 bg-black/[0.035] text-neutral-700 hover:bg-black hover:text-white"
-    : "border-white/10 bg-white/[0.06] text-gray-300 hover:bg-white/15 hover:text-white"
+    ? "border-black/10 bg-black/[0.025] text-neutral-800 shadow-[0_6px_18px_rgba(0,0,0,0.04)] hover:border-black/20 hover:bg-black hover:text-white"
+    : "border-white/10 bg-white/[0.035] text-gray-100 shadow-[0_6px_18px_rgba(0,0,0,0.18)] hover:border-white/20 hover:bg-white/10 hover:text-white"
   const descriptionPanelClass = isLightMode
     ? "border-black/20 bg-white text-black shadow-[12px_12px_0_rgba(0,0,0,0.1)]"
     : "border-white/15 bg-black text-white shadow-[12px_12px_0_rgba(255,255,255,0.06)]"
@@ -778,13 +775,6 @@ export default function Home() {
                         const hasProjectUrl = Boolean(projectUrl)
                         const hasGitUrl = Boolean(gitUrl)
                         const hasDescription = Boolean(description)
-                        const primaryActionUrl = projectUrl ?? gitUrl
-                        const primaryActionLabel = hasProjectUrl
-                          ? `Voir le projet ${project.name}`
-                          : hasGitUrl
-                            ? `Voir le code de ${project.name}`
-                            : null
-
                         return (
                           <article
                             key={project.documentId ?? project.id}
@@ -846,59 +836,47 @@ export default function Home() {
                             </div>
 
                             <div className="flex min-h-0 flex-1 flex-col px-5 pb-5 pt-4">
-                              <div className="flex items-end justify-between gap-4">
-                                <div className="min-w-0 flex-1">
-                                  <h3
-                                    className={`truncate text-xl font-medium tracking-[-0.025em] ${
-                                      isLightMode ? "text-black" : "text-white"
-                                    }`}
-                                  >
-                                    {project.name}
-                                  </h3>
-                                  {description ? (
-                                    <p className={`project-card-description mt-1.5 text-sm leading-5 ${mutedTextClass}`}>
-                                      {description}
-                                    </p>
-                                  ) : (
-                                    <p className={`mt-1.5 text-sm leading-5 ${mutedTextClass}`}>
-                                      Projet selectionne du portfolio.
-                                    </p>
-                                  )}
-                                </div>
-
-                                {primaryActionUrl ? (
-                                  <a
-                                    href={primaryActionUrl}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label={primaryActionLabel ?? undefined}
-                                    className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border transition duration-300 ${premiumProjectActionClass}`}
-                                  >
-                                    <svg
-                                      className="h-5 w-5"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="1.8"
-                                      viewBox="0 0 24 24"
-                                    >
-                                      <path d="M5 12h14M13 6l6 6-6 6" />
-                                    </svg>
-                                  </a>
-                                ) : null}
+                              <div className="min-w-0">
+                                <h3
+                                  className={`truncate text-xl font-medium tracking-[-0.025em] ${
+                                    isLightMode ? "text-black" : "text-white"
+                                  }`}
+                                >
+                                  {project.name}
+                                </h3>
+                                {description ? (
+                                  <p className={`project-card-description mt-1.5 text-sm leading-5 ${mutedTextClass}`}>
+                                    {description}
+                                  </p>
+                                ) : (
+                                  <p className={`mt-1.5 text-sm leading-5 ${mutedTextClass}`}>
+                                    Projet selectionne du portfolio.
+                                  </p>
+                                )}
                               </div>
 
-                              {hasGitUrl || hasDescription ? (
+                              {hasProjectUrl || hasGitUrl || hasDescription ? (
                                 <div className="mt-auto flex flex-wrap gap-2 pt-3">
+                                  {hasProjectUrl ? (
+                                    <a
+                                      href={projectUrl ?? "#"}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className={`inline-flex h-9 items-center gap-3 rounded-lg border px-3 text-xs font-medium transition duration-300 ${premiumProjectLinkClass}`}
+                                    >
+                                      <span>Voir</span>
+                                      <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                                    </a>
+                                  ) : null}
                                   {hasGitUrl ? (
                                     <a
                                       href={gitUrl ?? "#"}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className={`rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] transition ${premiumProjectLinkClass}`}
+                                      className={`inline-flex h-9 items-center gap-3 rounded-lg border px-3 text-xs font-medium transition duration-300 ${premiumProjectLinkClass}`}
                                     >
-                                      Code
+                                      <span>Git</span>
+                                      <Github className="h-3.5 w-3.5" aria-hidden="true" />
                                     </a>
                                   ) : null}
                                   {hasDescription ? (
@@ -910,9 +888,10 @@ export default function Home() {
                                           description: description ?? "",
                                         })
                                       }}
-                                      className={`rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] transition ${premiumProjectLinkClass}`}
+                                      className={`inline-flex h-9 items-center gap-3 rounded-lg border px-3 text-xs font-medium transition duration-300 ${premiumProjectLinkClass}`}
                                     >
-                                      Details
+                                      <span>Détails</span>
+                                      <FileText className="h-3.5 w-3.5" aria-hidden="true" />
                                     </button>
                                   ) : null}
                                 </div>
