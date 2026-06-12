@@ -3,6 +3,13 @@
   display: none;
 }
 
+.project-card-description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 @media (max-width: 767px) {
   .portfolio-scroll,
   .hero-section,
@@ -37,6 +44,15 @@
   .hub-title {
     font-size: clamp(2rem, 9vw, 2.5rem);
     line-height: 1.1;
+  }
+
+  .project-grid {
+    gap: 1rem;
+  }
+
+  .premium-project-card {
+    height: 22rem;
+    border-radius: 1.4rem;
   }
 
   .hero-content {

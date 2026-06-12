@@ -462,6 +462,15 @@ export default function Home() {
   const projectButtonClass = isLightMode
     ? "border-black bg-white text-black hover:bg-black hover:text-white"
     : "border-white/15 bg-white text-black hover:bg-neutral-200"
+  const premiumProjectCardClass = isLightMode
+    ? "border-black/10 bg-white/80 shadow-[0_24px_70px_rgba(0,0,0,0.12)]"
+    : "border-white/15 bg-neutral-950/80 shadow-[0_24px_70px_rgba(0,0,0,0.45)]"
+  const premiumProjectActionClass = isLightMode
+    ? "border-black/10 bg-black/[0.04] text-black hover:bg-black hover:text-white"
+    : "border-white/10 bg-white/10 text-white hover:bg-white hover:text-black"
+  const premiumProjectLinkClass = isLightMode
+    ? "border-black/10 bg-black/[0.035] text-neutral-700 hover:bg-black hover:text-white"
+    : "border-white/10 bg-white/[0.06] text-gray-300 hover:bg-white/15 hover:text-white"
   const descriptionPanelClass = isLightMode
     ? "border-black/20 bg-white text-black shadow-[12px_12px_0_rgba(0,0,0,0.1)]"
     : "border-white/15 bg-black text-white shadow-[12px_12px_0_rgba(255,255,255,0.06)]"
@@ -740,7 +749,7 @@ export default function Home() {
 
                   <div
                     data-annex-scroll
-                    className="no-scrollbar mt-8 grid min-h-0 flex-1 auto-rows-max grid-cols-1 content-start items-start gap-4 overflow-y-auto overscroll-contain pr-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                    className="project-grid no-scrollbar mt-8 grid min-h-0 flex-1 auto-rows-max grid-cols-1 content-start items-start gap-5 overflow-y-auto overscroll-contain pr-1 lg:grid-cols-2"
                   >
                     {isLoadingProjects ? (
                       <div className={`col-span-full border p-6 text-center text-sm ${projectCardClass} ${mutedTextClass}`}>
@@ -769,7 +778,12 @@ export default function Home() {
                         const hasProjectUrl = Boolean(projectUrl)
                         const hasGitUrl = Boolean(gitUrl)
                         const hasDescription = Boolean(description)
-                        const hasActions = hasProjectUrl || hasGitUrl || hasDescription
+                        const primaryActionUrl = projectUrl ?? gitUrl
+                        const primaryActionLabel = hasProjectUrl
+                          ? `Voir le projet ${project.name}`
+                          : hasGitUrl
+                            ? `Voir le code de ${project.name}`
+                            : null
 
                         return (
                           <article
@@ -786,21 +800,18 @@ export default function Home() {
                             onBlur={() => {
                               if (isVideo) pauseProjectVideo(project.id)
                             }}
-                            className={`flex h-[21.5rem] self-start border p-4 text-left backdrop-blur-sm transition hover:-translate-y-1 ${projectCardClass}`}
+                            className={`premium-project-card group relative flex h-[25rem] self-start flex-col overflow-hidden rounded-[1.75rem] border text-left backdrop-blur-xl transition duration-500 hover:-translate-y-1 ${premiumProjectCardClass}`}
                           >
-                            <div className="flex min-h-0 flex-1 flex-col">
-                                <div className="flex min-h-[2.5rem] items-start justify-between gap-3">
-                                  <div className="min-w-0">
-                                    <h3 className={`text-base font-medium tracking-tight ${isLightMode ? "text-black" : "text-white"}`}>
-                                      {project.name}
-                                    </h3>
-                                  </div>
-                                <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] ${chipClass}`}>
-                                  {projectTag}
-                                </span>
-                              </div>
-
-                              <div className={`relative mt-4 aspect-[16/10] overflow-hidden border ${projectMediaClass}`}>
+                            <div className={`relative h-[58%] shrink-0 overflow-hidden ${projectMediaClass}`}>
+                              <span
+                                className={`absolute left-5 top-5 z-20 rounded-full border px-3 py-1.5 text-[10px] font-medium tracking-[0.12em] backdrop-blur-xl ${chipClass}`}
+                              >
+                                {projectTag}
+                              </span>
+                              <span
+                                aria-hidden="true"
+                                className="absolute bottom-4 left-5 z-20 h-2.5 w-2.5 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.9)]"
+                              />
                                 {mediaUrl ? (
                                   isVideo ? (
                                     <video
@@ -811,13 +822,13 @@ export default function Home() {
                                       muted
                                       playsInline
                                       preload="metadata"
-                                      className="h-full w-full object-cover"
+                                      className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
                                     />
                                   ) : (
                                     <img
                                       src={mediaUrl}
                                       alt={project.media?.alternativeText || project.name}
-                                      className="h-full w-full object-cover"
+                                      className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
                                     />
                                   )
                                 ) : (
@@ -825,29 +836,69 @@ export default function Home() {
                                     No media
                                   </div>
                                 )}
-                                <div className={`absolute inset-0 ${isLightMode ? "bg-white/10" : "bg-black/20"}`} />
+                              <div
+                                className={`pointer-events-none absolute inset-0 ${
+                                  isLightMode
+                                    ? "bg-gradient-to-t from-white/55 via-transparent to-white/5"
+                                    : "bg-gradient-to-t from-black/65 via-transparent to-black/5"
+                                }`}
+                              />
+                            </div>
+
+                            <div className="flex min-h-0 flex-1 flex-col px-5 pb-5 pt-4">
+                              <div className="flex items-end justify-between gap-4">
+                                <div className="min-w-0 flex-1">
+                                  <h3
+                                    className={`truncate text-xl font-medium tracking-[-0.025em] ${
+                                      isLightMode ? "text-black" : "text-white"
+                                    }`}
+                                  >
+                                    {project.name}
+                                  </h3>
+                                  {description ? (
+                                    <p className={`project-card-description mt-1.5 text-sm leading-5 ${mutedTextClass}`}>
+                                      {description}
+                                    </p>
+                                  ) : (
+                                    <p className={`mt-1.5 text-sm leading-5 ${mutedTextClass}`}>
+                                      Projet selectionne du portfolio.
+                                    </p>
+                                  )}
+                                </div>
+
+                                {primaryActionUrl ? (
+                                  <a
+                                    href={primaryActionUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label={primaryActionLabel ?? undefined}
+                                    className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border transition duration-300 ${premiumProjectActionClass}`}
+                                  >
+                                    <svg
+                                      className="h-5 w-5"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="1.8"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path d="M5 12h14M13 6l6 6-6 6" />
+                                    </svg>
+                                  </a>
+                                ) : null}
                               </div>
 
-                              {hasActions ? (
-                                <div className="mt-auto flex flex-wrap gap-2 pt-4">
-                                  {hasProjectUrl ? (
-                                    <a
-                                      href={projectUrl ?? "#"}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      className={`min-w-[5.5rem] flex-1 border px-2 py-2.5 text-center text-[10px] uppercase tracking-[0.18em] transition ${projectButtonClass}`}
-                                    >
-                                      Voir
-                                    </a>
-                                  ) : null}
+                              {hasGitUrl || hasDescription ? (
+                                <div className="mt-auto flex flex-wrap gap-2 pt-3">
                                   {hasGitUrl ? (
                                     <a
                                       href={gitUrl ?? "#"}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className={`min-w-[5.5rem] flex-1 border px-2 py-2.5 text-center text-[10px] uppercase tracking-[0.18em] transition ${projectButtonClass}`}
+                                      className={`rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] transition ${premiumProjectLinkClass}`}
                                     >
-                                      Git
+                                      Code
                                     </a>
                                   ) : null}
                                   {hasDescription ? (
@@ -859,9 +910,9 @@ export default function Home() {
                                           description: description ?? "",
                                         })
                                       }}
-                                      className={`min-w-[7.5rem] flex-1 border px-2 py-2.5 text-center text-[10px] uppercase tracking-[0.18em] transition ${projectButtonClass}`}
+                                      className={`rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] transition ${premiumProjectLinkClass}`}
                                     >
-                                      Description
+                                      Details
                                     </button>
                                   ) : null}
                                 </div>
