@@ -673,9 +673,9 @@ export default function Home() {
   }, [chatMessages, isSendingChat, chatError])
 
   return (
-    <div ref={pageScrollRef} className="h-screen overflow-y-scroll snap-y snap-mandatory">
+    <div ref={pageScrollRef} className="portfolio-scroll h-screen overflow-y-scroll snap-y snap-mandatory">
       <main className={`relative min-h-screen w-full transition-colors duration-300 ${mainThemeClass}`}>
-        <nav aria-label="Theme mode" className="fixed left-5 top-5 z-30 flex items-center gap-2 md:left-8 md:top-8">
+        <nav aria-label="Theme mode" className="theme-navigation fixed left-5 top-5 z-30 flex items-center gap-2 md:left-8 md:top-8">
             <button
               type="button"
               onClick={() => setTheme("dark")}
@@ -694,7 +694,7 @@ export default function Home() {
             </button>
         </nav>
 
-        <nav aria-label="Social links" className="fixed right-5 top-5 z-30 flex items-center gap-3 md:right-8 md:top-8">
+        <nav aria-label="Social links" className="social-navigation fixed right-5 top-5 z-30 flex items-center gap-3 md:right-8 md:top-8">
           {socialLinks.map(({ label, href, icon: Icon }) => (
             <a
               key={label}
@@ -709,7 +709,7 @@ export default function Home() {
           ))}
         </nav>
 
-        <section className="relative h-screen overflow-hidden snap-start">
+        <section className="hero-section relative h-screen overflow-hidden snap-start">
           <div
             ref={heroRailRef}
             className="no-scrollbar h-full w-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth"
@@ -902,7 +902,7 @@ export default function Home() {
                 </div>
               </article>
 
-              <article className="relative flex h-full w-screen shrink-0 snap-start items-center justify-center overflow-hidden">
+              <article className="home-panel relative flex h-full w-screen shrink-0 snap-start items-center justify-center overflow-hidden">
                 <FlickeringGrid
                   className="absolute inset-0 z-0"
                   color={gridColor}
@@ -917,10 +917,10 @@ export default function Home() {
                   hoverOpacity={0.18}
                   hoverScale={1.28}
                 />
-                <div className="max-w-6xl mx-auto text-center relative z-10">
+                <div className="hero-content max-w-6xl mx-auto text-center relative z-10">
                   <div className="relative">
                     <div className="inline-block">
-                      <h1 className={`relative mb-8 text-5xl font-medium tracking-tight md:text-7xl ${primaryTextClass}`}>
+                      <h1 className={`hero-title relative mb-8 text-5xl font-medium tracking-tight md:text-7xl ${primaryTextClass}`}>
                         <Typewriter
                           options={{
                             strings: ["Valentin Loth"],
@@ -933,14 +933,14 @@ export default function Home() {
                           }}
                         />
                       </h1>
-                      <p className={`mx-auto mt-6 max-w-3xl text-lg font-light md:text-xl ${mutedTextClass}`}>
+                      <p className={`hero-subtitle mx-auto mt-6 max-w-3xl text-lg font-light md:text-xl ${mutedTextClass}`}>
                         Software Engineer
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="absolute left-5 top-1/2 z-10 flex -translate-y-1/2 flex-col items-center gap-3 md:left-8">
+                <div className="hero-control hero-control-hub absolute left-5 top-1/2 z-10 flex -translate-y-1/2 flex-col items-center gap-3 md:left-8">
                   <span className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.22em] backdrop-blur-sm ${chipClass}`}>
                     HUB
                   </span>
@@ -968,7 +968,7 @@ export default function Home() {
                   </button>
                 </div>
 
-                <div className="absolute right-5 top-1/2 z-10 flex -translate-y-1/2 flex-col items-center gap-3 md:right-8">
+                <div className="hero-control hero-control-about absolute right-5 top-1/2 z-10 flex -translate-y-1/2 flex-col items-center gap-3 md:right-8">
                   <span className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.22em] backdrop-blur-sm ${chipClass}`}>
                     About
                   </span>
@@ -999,7 +999,7 @@ export default function Home() {
                   </button>
                 </div>
 
-                <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3">
+                <div className="hero-control hero-control-chat absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3">
                   <span className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.22em] backdrop-blur-sm ${chipClass}`}>
                     Assistant chatbot
                   </span>
@@ -1091,7 +1091,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={`relative h-screen overflow-hidden px-4 snap-start md:px-6 ${isLightMode ? "bg-white" : "bg-black"}`}>
+        <section className={`chat-section relative h-screen overflow-hidden px-4 snap-start md:px-6 ${isLightMode ? "bg-white" : "bg-black"}`}>
           <FlickeringGrid
             className="absolute inset-0 z-0"
             color={gridColor}
