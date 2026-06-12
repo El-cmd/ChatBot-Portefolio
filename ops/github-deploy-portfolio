@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+readonly repo_dir="/home/vloth/prod/apps/portfolio-next"
+readonly compose_file="docker-compose.prod.yml"
+readonly lock_file="/home/vloth/prod/apps/.portfolio-next-deploy.lock"
+
+deploy_command="${SSH_ORIGINAL_COMMAND:-${*:-}}"
+if [[ ! "$deploy_command" =~ ^deploy[[:space:]]+([0-9a-f]{40})$ ]]; then
+  echo "Only 'deploy <git-sha>' is allowed." >&2
+  exit 64
+fi
+readonly deploy_sha="${BASH_REMATCH[1]}"
+
+exec 9>"$lock_file"
+if ! flock -n 9; then
+  echo "Another production deployment is already running." >&2
+  exit 75
+fi
+
+cd "$repo_dir"
+
+show_diagnostics() {
+  exit_code=$?
+  echo "Deployment failed with exit code $exit_code." >&2
+  docker compose -f "$compose_file" ps >&2 || true
+  docker compose -f "$compose_file" logs --tail=80 >&2 || true
+  exit "$exit_code"
+}
+trap show_diagnostics ERR
+
+git fetch --prune origin main
+git cat-file -e "${deploy_sha}^{commit}"
+
+if ! git merge-base --is-ancestor "$deploy_sha" origin/main; then
+  echo "Revision $deploy_sha is not contained in origin/main." >&2
+  exit 65
+fi
+
+git merge --ff-only "$deploy_sha"
+docker compose -f "$compose_file" config --quiet
+COMPOSE_BAKE=false docker compose -f "$compose_file" up -d --build
+
+services=(postgres chatbot_backend strapi frontend gateway)
+deadline=$((SECONDS + 240))
+
+for service in "${services[@]}"; do
+  container_id="$(docker compose -f "$compose_file" ps -q "$service")"
+  if [[ -z "$container_id" ]]; then
+    echo "No container found for service $service." >&2
+    exit 1
+  fi
+
+  while true; do
+    status="$(
+      docker inspect \
+        --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' \
+        "$container_id"
+    )"
+
+    case "$status" in
+      healthy | running)
+        break
+        ;;
+      unhealthy | exited | dead)
+        echo "Service $service entered state $status." >&2
+        exit 1
+        ;;
+    esac
+
+    if ((SECONDS >= deadline)); then
+      echo "Timed out waiting for service $service (state: $status)." >&2
+      exit 1
+    fi
+
+    sleep 3
+  done
+done
+
+docker exec portfolio-next-gateway \
+  wget -qO- http://127.0.0.1/gateway-health |
+  grep -qx "ok"
+
+echo "Production deployed at revision $deploy_sha."
+docker compose -f "$compose_file" ps
