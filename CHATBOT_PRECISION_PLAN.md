@@ -17,65 +17,74 @@ Question utilisateur
 
 Les points faibles actuels sont :
 
-- La base de connaissance ne couvre pas encore tous les sujets que le routeur RAG attend.
+- Certaines intentions du routeur RAG ciblent encore d'anciens fichiers qui ne sont plus souhaites.
 - Le modele d'embedding actuel est leger et pas ideal pour du contenu principalement francais.
 - Le seuil de pertinence peut laisser passer des extraits moyens.
 - Le chatbot ne conserve pas le contexte des questions precedentes.
 - Les tests actuels verifient surtout que l'API repond, pas que la reponse est factuellement correcte.
 
-## Priorite 1 - Completer la base de connaissance
+## Priorite 1 - Nettoyer le routage RAG
 
-Ajouter les fichiers Markdown suivants dans `kb/` :
+Il n'est pas obligatoire de creer des fichiers separes pour les services, les tarifs, le process ou la FAQ.
+
+Les fichiers actuels peuvent rester :
 
 ```text
-kb/services.md
-kb/pricing.md
-kb/process.md
-kb/faq.md
+kb/about.md
+kb/contact.md
+kb/projects.md
+kb/skills.md
 ```
 
-Pourquoi :
+Le point important est d'aligner `rag_service.py` avec cette organisation.
 
-- `rag_service.py` route deja certaines questions vers `services.md`, `pricing.md`, `process.md` et `faq.md`.
-- Si ces fichiers n'existent pas, le chatbot peut recuperer des extraits moins pertinents.
-- Les questions sur les tarifs, les prestations, les delais et la methode de travail seront plus precises.
+Actuellement, certaines questions peuvent encore etre routees vers :
 
-Structure conseillee :
-
-```markdown
-# Services
-
-## Site vitrine
-Description :
-Inclus :
-Non inclus :
-Delai habituel :
-Technologies possibles :
-
-## Chatbot IA
-Description :
-Inclus :
-Non inclus :
-Prerequis client :
+```text
+services.md
+pricing.md
+process.md
+faq.md
 ```
 
-Pour les tarifs :
+Ce n'est pas grave si ces fichiers n'existent pas : le code retombe sur la recherche globale quand aucune source preferee ne donne de resultat. Mais ce n'est pas ideal, car l'intention "services / prix / devis" n'est pas clairement mappee sur les fichiers qui existent vraiment.
+
+Actions conseillees :
+
+1. Retirer les references a `services.md`, `pricing.md`, `process.md` et `faq.md` si ces fichiers ne seront pas utilises.
+2. Rediriger les questions "services", "prestations", "tarifs", "prix", "devis", "process" vers les fichiers existants les plus pertinents.
+3. Ajouter les informations utiles directement dans `skills.md`, `about.md` ou `contact.md`.
+
+Exemple d'organisation sans nouveaux fichiers :
 
 ```markdown
-# Tarifs
+<!-- kb/skills.md -->
 
-## Site vitrine
-Fourchette :
-Ce qui fait varier le prix :
-Ce qui est inclus :
+## Services possibles
+- Sites vitrines
+- Landing pages
+- APIs backend
+- Chatbots IA RAG
+- Deploiement Docker / VPS / Nginx
 
-## Chatbot IA RAG
-Fourchette :
-Ce qui fait varier le prix :
-Ce qui est inclus :
+## Prestations non couvertes
+- Pas de promesse de resultat SEO garantie
+- Pas de conseil juridique ou comptable
 
-## Devis
-Pour un prix exact, proposer /contact.
+<!-- kb/contact.md -->
+
+## Devis et tarifs
+Les tarifs dependent du perimetre. Pour un prix exact, proposer /contact.
+```
+
+Exemple de modification logique :
+
+```python
+if any(marker in normalized for marker in ("service", "prestation", "tarif", "prix", "devis", "cout")):
+    return {"skills.md", "contact.md"}
+
+if any(marker in normalized for marker in ("process", "methode", "etape", "livraison", "maintenance")):
+    return {"about.md", "contact.md"}
 ```
 
 ## Priorite 2 - Utiliser un embedding multilingue
@@ -234,15 +243,16 @@ Apres ajout d'un meilleur embedding et d'un reranker :
 
 Ordre conseille :
 
-1. Ajouter `services.md`, `pricing.md`, `process.md`, `faq.md`.
-2. Regenerer `kb_faiss`.
-3. Tester les questions de `QUESTIONS_CHATBOT.md`.
-4. Passer a `intfloat/multilingual-e5-base`.
-5. Regenerer `kb_faiss` a nouveau.
-6. Ajuster `KB_TOP_K` et `KB_MIN_SCORE`.
-7. Ajouter `EVAL_CHATBOT.json`.
-8. Ajouter la memoire conversationnelle.
-9. Ajouter un reranker si la precision reste insuffisante.
+1. Nettoyer le routage vers les fichiers KB reellement utilises.
+2. Ajouter les informations manquantes dans `skills.md`, `about.md`, `contact.md` ou `projects.md`.
+3. Regenerer `kb_faiss`.
+4. Tester les questions de `QUESTIONS_CHATBOT.md`.
+5. Passer a `intfloat/multilingual-e5-base`.
+6. Regenerer `kb_faiss` a nouveau.
+7. Ajuster `KB_TOP_K` et `KB_MIN_SCORE`.
+8. Ajouter `EVAL_CHATBOT.json`.
+9. Ajouter la memoire conversationnelle.
+10. Ajouter un reranker si la precision reste insuffisante.
 
 ## Definition d'une bonne reponse
 
@@ -282,4 +292,3 @@ git add kb_faiss CHATBOT_PRECISION_PLAN.md
 git commit -m "Improve chatbot knowledge base precision"
 git push origin main
 ```
-
