@@ -20,6 +20,7 @@ import type {
 import type { StrapiProject } from "@/lib/strapi"
 
 const MAX_CHAT_MESSAGE_LENGTH = 1000
+const CHAT_CLIENT_TIMEOUT_MS = 35000
 
 const socialLinks = [
   {
@@ -149,11 +150,15 @@ export default function Home() {
     setChatError(null)
     setIsSendingChat(true)
 
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), CHAT_CLIENT_TIMEOUT_MS)
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
+        signal: controller.signal,
       })
       const payload = (await response.json()) as ChatApiResponse
 
@@ -163,8 +168,16 @@ export default function Home() {
 
       setChatMessages([...nextMessages, { role: "assistant", content: payload.answer }])
     } catch (error) {
-      setChatError(error instanceof Error ? error.message : "Impossible de joindre le chatbot.")
+      const isAbort = error instanceof DOMException && error.name === "AbortError"
+      setChatError(
+        isAbort
+          ? "Le chatbot met trop de temps a repondre. Reessaie dans quelques secondes."
+          : error instanceof Error
+            ? error.message
+            : "Impossible de joindre le chatbot.",
+      )
     } finally {
+      window.clearTimeout(timeout)
       setIsSendingChat(false)
     }
   }

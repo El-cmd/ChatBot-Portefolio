@@ -135,7 +135,7 @@ export function ChatSection({
           ) : null}
         </div>
 
-        {chatMessages.length > 0 ? (
+        {chatMessages.length > 0 && !isSendingChat ? (
           <div className="no-scrollbar -mt-2 flex shrink-0 gap-2 overflow-x-auto pb-3">
             {suggestedQuestions.map((question) => (
               <button
