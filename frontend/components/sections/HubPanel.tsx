@@ -101,6 +101,7 @@ export function HubPanel({
           ) : (
             projects.map((project) => {
               const mediaUrl = getStrapiAssetUrl(project.media?.url)
+              const mediaPosterUrl = getStrapiAssetUrl(project.media?.previewUrl)
               const isVideo = project.media?.mime?.startsWith("video/")
               const projectUrl = normalizeOptionalText(project.project_url)
               const gitUrl = normalizeOptionalText(project.git_url)
@@ -141,6 +142,7 @@ export function HubPanel({
                             videoRefs.current[project.id] = refs
                           }}
                           src={mediaUrl}
+                          poster={mediaPosterUrl ?? undefined}
                           muted
                           playsInline
                           preload="metadata"
@@ -179,6 +181,7 @@ export function HubPanel({
                             videoRefs.current[project.id] = refs
                           }}
                           src={mediaUrl}
+                          poster={mediaPosterUrl ?? undefined}
                           muted
                           playsInline
                           preload="metadata"

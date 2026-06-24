@@ -4,6 +4,7 @@ export type StrapiMedia = {
   name?: string
   alternativeText?: string | null
   mime?: string
+  previewUrl?: string | null
   url: string
 }
 
