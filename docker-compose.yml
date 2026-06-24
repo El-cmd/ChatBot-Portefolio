@@ -70,13 +70,16 @@ services:
       STRAPI_INTERNAL_URL: http://strapi:1337
       STRAPI_API_TOKEN: ${STRAPI_API_TOKEN:-}
       CHATBOT_INTERNAL_URL: http://chatbot_backend:8001
+      REDIS_URL: redis://redis:6379
       BACKEND_TIMEOUT_MS: ${BACKEND_TIMEOUT_MS:-30000}
+      PROJECTS_CACHE_TTL_SECONDS: ${PROJECTS_CACHE_TTL_SECONDS:-300}
       CHAT_RATE_LIMIT_ENABLED: ${CHAT_RATE_LIMIT_ENABLED:-true}
       CHAT_RATE_LIMIT_REQUESTS_PER_MINUTE: ${CHAT_RATE_LIMIT_REQUESTS_PER_MINUTE:-5}
       CHAT_RATE_LIMIT_BURST: ${CHAT_RATE_LIMIT_BURST:-3}
       CHAT_RATE_LIMIT_TRUST_PROXY_HEADERS: ${CHAT_RATE_LIMIT_TRUST_PROXY_HEADERS:-true}
     command: npm run dev -- -H 0.0.0.0 -p 5173
     depends_on:
+      - redis
       - chatbot_backend
       - strapi
 
@@ -92,12 +95,15 @@ services:
       STRAPI_INTERNAL_URL: http://strapi:1337
       STRAPI_API_TOKEN: ${STRAPI_API_TOKEN:-}
       CHATBOT_INTERNAL_URL: http://chatbot_backend:8001
+      REDIS_URL: redis://redis:6379
       BACKEND_TIMEOUT_MS: ${BACKEND_TIMEOUT_MS:-30000}
+      PROJECTS_CACHE_TTL_SECONDS: ${PROJECTS_CACHE_TTL_SECONDS:-300}
       CHAT_RATE_LIMIT_ENABLED: ${CHAT_RATE_LIMIT_ENABLED:-true}
       CHAT_RATE_LIMIT_REQUESTS_PER_MINUTE: ${CHAT_RATE_LIMIT_REQUESTS_PER_MINUTE:-5}
       CHAT_RATE_LIMIT_BURST: ${CHAT_RATE_LIMIT_BURST:-3}
       CHAT_RATE_LIMIT_TRUST_PROXY_HEADERS: ${CHAT_RATE_LIMIT_TRUST_PROXY_HEADERS:-true}
     depends_on:
+      - redis
       - chatbot_backend
       - strapi
     networks:
@@ -117,6 +123,15 @@ services:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 3s
       retries: 5
 
   strapi:
